@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   FlatList,
   ActivityIndicator,
@@ -43,7 +43,7 @@ class ReactComp extends Component {
     this.state = {
       reservations: []
     };
-    this.heights=[];
+    this.heights = [];
     this.selectedDay = this.props.selectedDay;
     this.scrollOver = true;
   }
@@ -60,20 +60,20 @@ class ReactComp extends Component {
 
   updateReservations(props) {
     const reservations = this.getReservations(props);
-    if (this.list && !dateutils.sameDate(props.selectedDay, this.selectedDay)) {
+    if (this.list && ! dateutils.sameDate(props.selectedDay, this.selectedDay)) {
       let scrollPosition = 0;
-      for (let i = 0; i < reservations.scrollPosition; i++) {
+      for (let i = 0; i < reservations.scrollPosition; i ++) {
         scrollPosition += this.heights[i] || 0;
       }
       this.scrollOver = false;
-      this.list.scrollToOffset({offset: scrollPosition, animated: true});
+      this.list.scrollToOffset({ offset: scrollPosition, animated: true });
     }
     this.selectedDay = props.selectedDay;
     this.updateDataSource(reservations.reservations);
   }
 
   componentWillReceiveProps(props) {
-    if (!dateutils.sameDate(props.topDay, this.props.topDay)) {
+    if (! dateutils.sameDate(props.topDay, this.props.topDay)) {
       this.setState({
         reservations: []
       }, () => {
@@ -89,17 +89,17 @@ class ReactComp extends Component {
     this.props.onScroll(yOffset);
     let topRowOffset = 0;
     let topRow;
-    for (topRow = 0; topRow < this.heights.length; topRow++) {
+    for (topRow = 0; topRow < this.heights.length; topRow ++) {
       if (topRowOffset + this.heights[topRow] / 2 >= yOffset) {
         break;
       }
       topRowOffset += this.heights[topRow];
     }
     const row = this.state.reservations[topRow];
-    if (!row) return;
+    if (! row) return;
     const day = row.day;
     const sameDate = dateutils.sameDate(day, this.selectedDay);
-    if (!sameDate && this.scrollOver) {
+    if (! sameDate && this.scrollOver) {
       this.selectedDay = day.clone();
       this.props.onDayChange(day.clone());
     }
@@ -109,7 +109,7 @@ class ReactComp extends Component {
     this.heights[ind] = event.nativeEvent.layout.height;
   }
 
-  renderRow({item, index}) {
+  renderRow({ item, index }) {
     return (
       <View onLayout={this.onRowLayoutChange.bind(this, index)}>
         <Reservation
@@ -150,15 +150,15 @@ class ReactComp extends Component {
   }
 
   getReservations(props) {
-    if (!props.reservations || !props.selectedDay) {
-      return {reservations: [], scrollPosition: 0};
+    if (! props.reservations || ! props.selectedDay) {
+      return { reservations: [], scrollPosition: 0 };
     }
     let reservations = [];
     if (this.state.reservations && this.state.reservations.length) {
       const iterator = this.state.reservations[0].day.clone();
       while (iterator.getTime() < props.selectedDay.getTime()) {
         const res = this.getReservationsForDay(iterator, props);
-        if (!res) {
+        if (! res) {
           reservations = [];
           break;
         } else {
@@ -169,7 +169,7 @@ class ReactComp extends Component {
     }
     const scrollPosition = reservations.length;
     const iterator = props.selectedDay.clone();
-    for (let i = 0; i < 31; i++) {
+    for (let i = 0; i < 31; i ++) {
       const res = this.getReservationsForDay(iterator, props);
       if (res) {
         reservations = reservations.concat(res);
@@ -177,32 +177,66 @@ class ReactComp extends Component {
       iterator.addDays(1);
     }
 
-    return {reservations, scrollPosition};
+    return { reservations, scrollPosition };
   }
 
   render() {
-    if (!this.props.reservations || !this.props.reservations[this.props.selectedDay.toString('yyyy-MM-dd')]) {
-      if (this.props.renderEmptyDate) {
-        return this.props.renderEmptyDate();
-      }
-      return (<ActivityIndicator style={{marginTop: 80}}/>);
-    }
+    // if (! this.props.reservations || ! this.props.reservations[this.props.selectedDay.toString('yyyy-MM-dd')]) {
+    //   if (this.props.renderEmptyDate) {
+    //     return (
+    //       <View>
+    //         {this.props.renderEmptyDate()}
+    //
+    //         <FlatList
+    //           ref={(c) => this.list = c}
+    //           style={this.props.style}
+    //           contentContainerStyle={this.styles.content}
+    //           renderItem={this.renderRow.bind(this)}
+    //           data={this.state.reservations}
+    //           onScroll={this.onScroll.bind(this)}
+    //           showsVerticalScrollIndicator={false}
+    //           scrollEventThrottle={200}
+    //           onMoveShouldSetResponderCapture={() => {
+    //             this.onListTouch();
+    //             return false;
+    //           }}
+    //           keyExtractor={(item, index) => String(index)}
+    //           refreshControl={this.props.refreshControl}
+    //           refreshing={this.props.refreshing || false}
+    //           onRefresh={this.props.onRefresh}
+    //         />
+    //
+    //       </View>
+    //     )
+    //   }
+    //   return (<ActivityIndicator style={{ marginTop: 80 }} />);
+    // }
     return (
-      <FlatList
-        ref={(c) => this.list = c}
-        style={this.props.style}
-        contentContainerStyle={this.styles.content}
-        renderItem={this.renderRow.bind(this)}
-        data={this.state.reservations}
-        onScroll={this.onScroll.bind(this)}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={200}
-        onMoveShouldSetResponderCapture={() => {this.onListTouch(); return false;}}
-        keyExtractor={(item, index) => String(index)}
-        refreshControl={this.props.refreshControl}
-        refreshing={this.props.refreshing || false}
-        onRefresh={this.props.onRefresh}
-      />
+      <View>
+        {
+          ! this.props.reservations[this.props.selectedDay.toString('yyyy-MM-dd')] &&
+          this.props.renderEmptyDate()
+        }
+        <FlatList
+          ref={(c) => this.list = c}
+          style={this.props.style}
+          contentContainerStyle={this.styles.content}
+          renderItem={this.renderRow.bind(this)}
+          data={this.state.reservations}
+          onScroll={this.onScroll.bind(this)}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={200}
+          onMoveShouldSetResponderCapture={() => {
+            this.onListTouch();
+            return false;
+          }}
+          keyExtractor={(item, index) => String(index)}
+          refreshControl={this.props.refreshControl}
+          refreshing={this.props.refreshing || false}
+          onRefresh={this.props.onRefresh}
+        />
+      </View>
+
     );
   }
 }
