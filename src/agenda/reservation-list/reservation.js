@@ -40,7 +40,7 @@ class ReservationListItem extends Component {
       return (
         <View style={this.styles.day}>
           <Text allowFontScaling={false} style={[this.styles.dayNum, today]}>{date.getDate()}</Text>
-          <Text allowFontScaling={false} style={[this.styles.dayText, today]}>{XDate.locales[XDate.defaultLocale].dayNamesShort[date.getDay()]}</Text>
+          <Text allowFontScaling={false} style={[this.styles.dayText, today]}>{['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][date.getDay()]}</Text>
         </View>
       );
     } else {
