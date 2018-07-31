@@ -150,12 +150,8 @@ class CalendarList extends Component {
 
   onViewableItemsChanged({viewableItems}) {
     function rowIsCloseToViewable(index, distance) {
-      for (let i = 0; i < viewableItems.length; i++) {
-        if (Math.abs(index - parseInt(viewableItems[i].index)) <= distance) {
-          return true;
-        }
-      }
-      return false;
+      return index - parseInt(viewableItems[0].index) >= 0 &&
+        Math.abs(index - parseInt(viewableItems[0].index)) <= distance
     }
 
     const rowclone = this.state.rows;
@@ -163,14 +159,14 @@ class CalendarList extends Component {
     const visibleMonths = [];
     for (let i = 0; i < rowclone.length; i++) {
       let val = rowclone[i];
-      const rowShouldBeRendered = rowIsCloseToViewable(i, 1);
+      const rowShouldBeRendered = rowIsCloseToViewable(i, 13);
       if (rowShouldBeRendered && !rowclone[i].getTime) {
         val = this.state.openDate.clone().addMonths(i - this.props.pastScrollRange, true);
       } else if (!rowShouldBeRendered) {
         val = this.state.texts[i];
       }
       newrows.push(val);
-      if (rowIsCloseToViewable(i, 0)) {
+      if (rowIsCloseToViewable(i, 13)) {
         visibleMonths.push(xdateToData(val));
       }
     }
