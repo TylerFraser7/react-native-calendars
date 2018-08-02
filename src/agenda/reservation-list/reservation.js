@@ -45,7 +45,7 @@ class ReservationListItem extends Component {
                   style={[this.styles.dayText, today]}>{['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()]}</Text>
           </View>
           <Text allowFontScaling={false}
-                style={[this.styles.dayText, today, { fontSize: 20 }]}>
+                style={[this.styles.month, today]}>
             {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][date.getMonth()]}
           </Text>
         </View>

@@ -27,6 +27,14 @@ export default function styleConstructor(theme = {}) {
       justifyContent: 'flex-start',
       // marginTop: 32
     },
+    month:{
+      fontSize: 28,
+      fontWeight: '200',
+      left: 10,
+      color: appStyle.agendaDayTextColor,
+      marginTop: -5,
+      backgroundColor: 'rgba(0,0,0,0)'
+    },
     dayContainer:{
       flexDirection:'row',
       alignItems:'center',
