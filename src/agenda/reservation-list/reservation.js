@@ -38,7 +38,7 @@ class ReservationListItem extends Component {
     const today = dateutils.sameDate(date, XDate()) ? this.styles.today : undefined;
     if (date) {
       return (
-        <View style={this.styles.dateContainer}>
+        <View style={this.styles.dayContainer}>
           <View style={this.styles.day}>
             <Text allowFontScaling={false} style={[this.styles.dayNum, today]}>{date.getDate()}</Text>
             <Text allowFontScaling={false}
