@@ -22,10 +22,15 @@ export default function styleConstructor(theme = {}) {
       backgroundColor: 'rgba(0,0,0,0)'
     },
     day: {
-      width: 63,
+      // width: 63,
       alignItems: 'center',
       justifyContent: 'flex-start',
       // marginTop: 32
+    },
+    dayContainer:{
+      flexDirection:'row',
+      alignItems:'center',
+      marginLeft: 20
     },
     today: {
       color: appStyle.agendaTodayColor
