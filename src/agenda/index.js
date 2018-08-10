@@ -209,7 +209,7 @@ export default class AgendaView extends Component {
 
   componentWillMount() {
     this._isMounted = true;
-    this.loadReservations(this.props);
+    // this.loadReservations(this.props);
   }
 
   componentWillUnmount() {
