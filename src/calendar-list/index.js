@@ -84,6 +84,11 @@ class CalendarList extends Component {
       openDate: date
     };
 
+    this.viewabilityConfig = {
+      waitForInteraction: false,
+      viewAreaCoveragePercentThreshold: 50
+    };
+
     this.onViewableItemsChangedBound = this.onViewableItemsChanged.bind(this);
     this.renderCalendarBound = this.renderCalendar.bind(this);
     this.getItemLayout = this.getItemLayout.bind(this);
@@ -207,6 +212,7 @@ class CalendarList extends Component {
         horizontal={this.props.horizontal}
         pagingEnabled={this.props.pagingEnabled}
         onViewableItemsChanged={this.onViewableItemsChangedBound}
+        viewabilityConfig={this.viewabilityConfig}
         renderItem={this.renderCalendarBound}
         showsVerticalScrollIndicator={this.props.showScrollIndicator}
         showsHorizontalScrollIndicator={this.props.showScrollIndicator}
