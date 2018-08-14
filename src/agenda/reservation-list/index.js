@@ -46,6 +46,12 @@ class ReactComp extends Component {
     this.heights = [];
     this.selectedDay = this.props.selectedDay;
     this.scrollOver = true;
+
+    this.viewabilityConfig = {
+      waitForInteraction: false,
+      viewAreaCoveragePercentThreshold: 50
+    };
+    this.onViewableItemsChangedBound = this.onViewableItemsChanged.bind(this);
   }
 
   componentWillMount() {
@@ -107,6 +113,10 @@ class ReactComp extends Component {
 
   onRowLayoutChange(ind, event) {
     this.heights[ind] = event.nativeEvent.layout.height;
+  }
+
+  onViewableItemsChanged(viewableItems) {
+    this.props.onViewableItemsChanged(viewableItems);
   }
 
   renderRow({ item, index }) {
@@ -230,6 +240,8 @@ class ReactComp extends Component {
             this.onListTouch();
             return false;
           }}
+          onViewableItemsChanged={this.onViewableItemsChangedBound}
+          viewabilityConfig={this.viewabilityConfig}
           keyExtractor={(item, index) => String(index)}
           refreshControl={this.props.refreshControl}
           refreshing={this.props.refreshing || false}
