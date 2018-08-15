@@ -293,7 +293,7 @@ export default class AgendaView extends Component {
         ref={(c) => this.list = c}
         theme={this.props.theme}
         onViewableItemsChanged={this.props.onViewableItemsChanged}
-        viewingPosts={this.props.viewingPosts}
+        viewingUnreadPosts={this.props.viewingUnreadPosts}
       />
     );
   }
