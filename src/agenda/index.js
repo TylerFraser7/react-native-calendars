@@ -191,7 +191,7 @@ export default class AgendaView extends Component {
       clearTimeout(this.scrollTimeout);
       this.scrollTimeout = setTimeout(() => {
         if (this.props.loadItemsForMonth && this._isMounted) {
-          return this.props.loadItemsForMonth(months[0], true)
+          return this.props.loadItemsForMonth(months[0], true, months)
         }
       }, 200);
     }
