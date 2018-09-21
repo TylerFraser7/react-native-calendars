@@ -222,7 +222,7 @@ class ReactComp extends Component {
     //   return (<ActivityIndicator style={{ marginTop: 80 }} />);
     // }
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         {
           ! this.props.reservations[this.props.selectedDay.toString('yyyy-MM-dd')] &&
           this.props.renderEmptyDate()
