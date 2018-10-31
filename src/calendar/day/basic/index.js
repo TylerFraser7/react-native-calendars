@@ -52,14 +52,16 @@ class Day extends Component {
         marking: true
       };
     };
-    
-    const isMiddleDay = moment(this.props.date.dateString).isBetween(
-      this.props.eventRanges.start_date,
-      this.props.eventRanges.end_date) || this.props.eventRanges.end_date===this.props.date.dateString;
+
+    const isMiddleDay = this.props.eventRanges.findIndex(couple=>{
+      return moment(this.props.date.dateString).isBetween(
+        couple.start_date,
+        couple.end_date) || couple.end_date===this.props.date.dateString;
+    });
 
     const isDisabled = typeof marking.disabled !== 'undefined' ? marking.disabled : this.props.state === 'disabled';
     let dot;
-    if (marking.marked || isMiddleDay) {
+    if (marking.marked || isMiddleDay > -1) {
       dotStyle.push(this.style.visibleDot);
       if (marking.dotColor) {
         dotStyle.push({backgroundColor: marking.dotColor});
