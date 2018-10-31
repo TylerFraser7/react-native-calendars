@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {shouldUpdate} from '../../../component-updater';
+import moment from 'moment';
 
 import styleConstructor from './style';
 
@@ -37,7 +38,7 @@ class Day extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onLongPress']);
+    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onLongPress', 'startAndEndDateCouples']);
   }
 
   render() {
@@ -50,10 +51,15 @@ class Day extends Component {
       marking = {
         marking: true
       };
-    }
+    };
+    
+    const isMiddleDay = moment(this.props.date.dateString).isBetween(
+      this.props.eventRanges.start_date,
+      this.props.eventRanges.end_date) || this.props.eventRanges.end_date===this.props.date.dateString;
+
     const isDisabled = typeof marking.disabled !== 'undefined' ? marking.disabled : this.props.state === 'disabled';
     let dot;
-    if (marking.marked) {
+    if (marking.marked || isMiddleDay) {
       dotStyle.push(this.style.visibleDot);
       if (marking.dotColor) {
         dotStyle.push({backgroundColor: marking.dotColor});

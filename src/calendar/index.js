@@ -185,6 +185,7 @@ class Calendar extends Component {
           onLongPress={this.longPressDay}
           date={xdateToData(day)}
           marking={this.getDateMarking(day)}
+          eventRanges={this.props.eventRanges}
         >
           {date}
         </DayComp>
@@ -225,7 +226,7 @@ class Calendar extends Component {
   }
 
   renderWeekNumber (weekNumber) {
-    return <Day key={`week-${weekNumber}`} theme={this.props.theme} marking={{disableTouchEvent: true}} state='disabled'>{weekNumber}</Day>;
+    return <Day key={`week-${weekNumber}`} theme={this.props.theme} marking={{disableTouchEvent: true}} state='disabled' eventRanges={this.props.eventRanges}>{weekNumber}</Day>;
   }
 
   renderWeek(days, id) {
