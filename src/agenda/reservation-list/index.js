@@ -7,6 +7,7 @@ import {
 import Reservation from './reservation';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
+import _ from 'lodash';
 
 import dateutils from '../../dateutils';
 import styleConstructor from './style';
@@ -232,7 +233,7 @@ class ReactComp extends Component {
           style={this.props.style}
           contentContainerStyle={this.styles.content}
           renderItem={this.renderRow.bind(this)}
-          data={this.state.reservations}
+          data={_.uniqBy(this.state.reservations, item=>item.reservation.post_id)}
           onScroll={this.onScroll.bind(this)}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={200}
